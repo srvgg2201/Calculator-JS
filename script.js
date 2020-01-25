@@ -8,14 +8,16 @@ const calculatorScreen = document.querySelector('.calculator-screen');
 const inputNumber = (number)=>{
     if(currentInput==='0'){
         currentInput=number;
-    } else {
+    } 
+   
+    else {
         currentInput+=number;
     }
     
 }
 const updateScreen = (number)=>{
     calculatorScreen.value = number;
-
+return;
 }
 
 const inputOperator = (operator) => {
@@ -42,7 +44,9 @@ const operators=document.querySelectorAll(".operator");
 
 operators.forEach((operator)=>{
         operator.addEventListener("click",(event) => {
-        inputOperator(event.target.value);
+            
+            inputOperator(event.target.value);
+            updateScreen(prevInput+calculationOperator);
         console.log(calculationOperator);
         })
            
@@ -59,18 +63,22 @@ operators.forEach((operator)=>{
      let result = 0;
      switch(calculationOperator) 
      {
-    
+        // updateScreen(prevInput+" "+calculationOperator+" "+currentInput);
          case '+':
-             result=parseInt(prevInput) + parseInt(currentInput);
+             
+            result=parseFloat(prevInput) + parseFloat(currentInput);
              break;
          case '-':
-            result=parseInt(prevInput) - parseInt(currentInput);
+            result=parseFloat(prevInput) - parseFloat(currentInput);
              break;
          case '*':
-            result=parseInt(prevInput) * parseInt(currentInput);
+            result=parseFloat(prevInput) * parseFloat(currentInput);
              break;
          case '/':
-            result=parseInt(prevInput) / parseInt(currentInput);
+            result=parseFloat(prevInput) / parseFloat(currentInput);
+             break;
+         case '%':
+             result = parseFloat(prevInput)*(parseFloat(currentInput)/100); 
              break;
         default:
 
@@ -93,3 +101,23 @@ const clearAll=()=>{
     calculationOperator='';
     currentInput='0';
 }
+const decimalPoint=()=>{
+    currentInput+='.';
+
+}
+
+const decimalBtn = document.querySelector('.decimal');
+decimalBtn.addEventListener('click',(event)=>{
+    decimalPoint();
+    updateScreen(currentInput);
+    console.log("decimal clicked");
+    
+}) 
+
+const percentageBtn = document.querySelector('.percentage');
+percentageBtn.addEventListener('click',(event)=>{
+    inputOperator(event.target.value);
+    updateScreen(prevInput+calculationOperator);
+    
+    
+})
